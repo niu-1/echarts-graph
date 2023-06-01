@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>echarts-graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+    <script src="./mock.js"></script>
+</head>
+<body>
+    <div id="main" style="width: 1200px;height:400px;"></div>
+
+    <script>
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        myChart.on('click',function(param) {
+            const { dataType,dataIndex } = param;
+            if(dataType === 'edge') {
+                linesData[dataIndex]['lineStyle']['width'] = 5;
+                linesData[dataIndex]['lineStyle']['shadowColor'] = param.borderColor;
+                myChart.setOption(option);
+            }
+        })
+        var graphData = []
+        var graphLines = []
+        // 指定图表的配置项和数据
+        var option = {
+            tooltip: {},
+            animationDurationUpdate: 1500,
+            animationEasingUpdate: "quinticInOut",
+            series: [
+                {
+                    type: "graph", // 关系图
+                    layout: "none", // 'none' 不采用任何布局，使用节点中提供的 x， y 作为节点的位置
+                    symbolSize: 50, // 点标记的大小，可以设置成诸如 10 这样单一的数字，也可以用数组分开表示宽和高，例如 [20, 10] 表示标记宽为20，高为10
+                    label: { // 图形上的文本标签，可用于说明图形的一些数据信息，比如值，名称等
+                        show: true, // 显示标签
+                    },
+                    // left: 20, 
+                    // right: 20, 
+                    // width: 600,
+                    edgeSymbol: ["circle", "arrow"], // 边两端的标记类型，可以是一个数组分别指定两端，也可以是单个统一指定。默认不显示标记，常见的可以设置为箭头
+                    edgeSymbolSize: [4, 10], // 边两端的标记大小，可以是一个数组分别指定两端，也可以是单个统一指定。
+                    edgeLabel: {
+                        fontSize: 20
+                    },
+                    emphasis: { // 高亮状态的图形样式
+                        focus: "series",
+                    },
+                    selectedMode: 'single', // 单选
+                    show: true,
+                    data: nodesData,
+                    links: linesData,
+                    autoCurveness: true,
+                    lineStyle: {
+                        opacity: 0.9,
+                        width: 3,
+                    }
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+    </script>
+</body>
+</html>
