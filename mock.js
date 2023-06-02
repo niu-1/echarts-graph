@@ -82,7 +82,7 @@ var  nodesData = [
             0
         ],
         "itemStyle": {
-            "color": "#FF9A26"
+            "color": "#87ceeb"
         },
         "select": {
             "itemStyle": {
